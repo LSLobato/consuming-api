@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import api from './services/api';
 
 function App() {
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    api
+      .get("/users/Romulo27")
+      .then((response) => setUser(response.data))
+      .catch((err) => {
+        console.error("Fom! ocorreu um erro" + err);
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   .post("http://base_url", {
+  //     campo1:"***",
+  //     campo2:"***"
+  //   })
+  //   .then((response) => setUser(response.data))
+  //   .catch((err) => {
+  //     console.error("Fom! Erro!" + err);
+  //   })
+  // }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <p>User: {user?.login} </p>
+        <p>Bio: {user?.bio} </p>
+      
     </div>
   );
 }
